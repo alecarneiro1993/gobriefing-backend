@@ -5,12 +5,14 @@ require "rails_helper"
 RSpec.describe Sessions::Authenticate do
   subject { Sessions::Authenticate }
   let(:credentials) do
-    { email: "test@test.com", password: "test123" }
+    { email: user.email, password: password }
   end
+  let(:password) { "test123" }
   let(:incorrect_credentials) do
-    { email: "incorrect@test.com", password: "abc123" }
+    { email: user_incorrect.email, password: "test321" }
   end
-  let!(:user) { create(:user) }
+  let(:user) { create(:user, password: password) }
+  let(:user_incorrect) { create(:user) }
 
   describe ".authenticate" do
     context "when the credentials are correct" do
